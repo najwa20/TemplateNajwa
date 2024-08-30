@@ -1,0 +1,378 @@
+/* Popup container */
+.popup-container {
+  width: 40vw;
+  max-width: none;
+  height: 100vh;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+  position: fixed;
+  top: 0;
+  right: 0;
+ 
+}
+
+/* Popup header */
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.popup-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+/* Header buttons */
+.header-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.header-buttons button {
+  margin-left: 8px;
+}
+
+.header-buttons .favorite-button {
+  background-color: #f28b82;
+  color: white;
+}
+
+.header-buttons .search-button {
+  background-color: #ffffff;
+  border: 2px solid #02133b;
+  color: #02133b;
+}
+
+/* Option buttons */
+.option-buttons {
+  display: flex;
+  justify-content: center;
+  margin: 16px;
+}
+
+.option-button {
+  margin: 0 8px; /* Space between buttons */
+  font-size: 16px;
+  padding: 8px 16px;
+  border: none; /* Remove default border */
+  border-bottom: 2px solid transparent; /* Default border bottom */
+  background-color: transparent; /* Transparent background */
+  cursor: pointer;
+  font-weight: bold;
+  outline: none;
+}
+
+/* Highlight the active button */
+.option-button.active {
+  border-bottom: 2px solid #f28b82; /* Pink border for active button */
+  color: #f28b82; /* Pink text color for active button */
+}
+
+/* List card */
+.list-card {
+  margin: 16px;
+  padding: 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  list-style: none; /* Ensure no bullets or list styles are applied */
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/* Remove default list styling from the card */
+.mat-card-content {
+  padding: 0;
+}
+
+/* Arrow button */
+.arrow-button {
+  background: none;
+  color: #7b7d81;
+}
+
+/* Form content */
+/*.form-content {
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-top: 1px solid #e0e0e0;
+  transition: max-height 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+/* Form fields */
+.mat-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+.form-content {
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Adjust gap between form fields */
+}
+
+
+
+/* Date picker styles */
+.mat-datepicker-toggle {
+  margin-left: 8px;
+}
+
+/* Select styles */
+.mat-select {
+  width: 100%;
+}
+.form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Adjust the gap between the form fields */
+}
+
+.full-width {
+  width: 100%;
+}
+
+.produit-contact-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px; /* Adjust the gap between the fields in the same line */
+}
+
+.half-width {
+  width: calc(50% - 8px); /* Adjust width based on the gap */
+}
+.field-with-icon {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.icon-container {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
+.icon-container.colored {
+  background-color: #f28b82; /* Set your desired background color here */
+}
+
+.fa-equals {
+  color: #fff; /* Adjust color as needed */
+}
+
+.fa-not-equal {
+  color: #000; /* Adjust color as needed */
+}
+.date-field .mat-form-field-prefix button.mat-icon-button {
+  margin-right: 8px; /* Adjust as needed */
+}
+
+.date-field .mat-form-field-suffix button.mat-icon-button {
+  margin-left: 8px; /* Adjust as needed */
+}
+
+.date-field i.fa-calendar {
+  color: #ccc; /* Change the color if needed */
+}
+
+.date-field i.fa-square-xmark {
+  color: #000; /* Change the color if needed */
+}
+.form-row {
+  display: flex;
+  gap: 16px; /* Adjust the gap as needed */
+}
+
+.half-width {
+  flex: 1;
+}
+
+.form-content {
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-top: 1px solid #e0e0e0;
+  transition: max-height 0.3s ease-in-out;
+  overflow: auto; /* Ensure overflow is handled properly */
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Adjust the gap between the form fields */
+}
+
+.mat-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+.custom-checkbox {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%; /* Makes the checkbox circular */
+  appearance: none; /* Remove default styles */
+  background-color: #fff; /* Background color */
+  border: 2px solid #ccc; /* Border color */
+  cursor: pointer;
+  outline: none; /* Remove default focus outline */
+  margin-right: 8px; /* Space between checkbox and label */
+}
+
+.custom-checkbox:checked {
+  background-color: #f28b82; /* Change background when checked */
+  border-color: #f28b82; /* Border color when checked */
+}
+
+.custom-checkbox:checked::after {
+  content: "✓";
+  color: white;
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  line-height: 20px;
+}
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.arrow-button {
+  order: 1;
+}
+
+.item-text {
+  order: 2;
+  margin-left: auto; /* Pushes the text to the right */
+}
+mat-card-title {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+mat-icon {
+  margin-left: 10px;
+  transition: transform 0.3s ease;
+}
+
+mat-card-title:hover {
+  text-decoration: underline;
+}
+
+mat-card-title.expand_less mat-icon {
+  transform: rotate(180deg);
+}
+
+.custom-checkbox {
+  margin-right: 10px;
+}
+
+/* General styling for the mat-tree */
+.mat-tree {
+  margin: 16px;
+}
+
+/* Styling for each tree node */
+.mat-tree-node {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+}
+
+/* Styling for nested tree nodes */
+.mat-nested-tree-node {
+  display: flex;
+  flex-direction: column;
+  margin-left: 24px; /* Indent nested nodes */
+}
+
+/* Styling for checkbox containers */
+.mat-checkbox {
+  margin-right: 16px; /* Space between checkbox and text */
+}
+
+/* Hide tree content when not expanded */
+.tree-invisible {
+  display: none;
+}
+
+/* Optional: styling for the button used to toggle tree nodes */
+.mat-icon-button {
+  margin-right: 8px;
+  padding: 0;
+}
+
+/* Optional: Styling for the icons */
+.mat-icon {
+  font-size: 24px;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.arrow-right::before {
+  content: '▶';
+}
+
+.arrow-down::before {
+  content: '▼';
+}
+.custom-date-field .input-with-icons {
+  display: flex;
+  align-items: center;
+}
+
+.custom-date-field .calendar-icon {
+  margin-right: 8px;
+}
+
+.custom-date-field input[type="date"] {
+  flex: 1;
+}
+
+.custom-date-field .close-icon {
+  margin-left: 8px;
+  cursor: pointer;
+}
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px; /* Adjust padding as needed */
+}
+
+
+.list-item {
+  display: flex;
+  justify-content: space-between; /* This separates the text and the arrow */
+  align-items: center; /* This vertically centers the content */
+  width: 100%; /* Ensures the item takes up the full width */
+}
+

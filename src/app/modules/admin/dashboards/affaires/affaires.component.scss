@@ -1,0 +1,117 @@
+.flex {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.min-w-0 {
+    min-width: 0;
+}
+
+.flex-auto {
+    flex: 1 1 auto;
+}
+
+.card {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    width: 1150px; /* Adjust width as needed */
+}
+
+.card-1 {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    width: 1200px; /* Adjust width as needed */
+    height: 150px;
+}
+
+.actions-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Aligns buttons to the left */
+    margin-bottom: 16px; /* Adjust spacing as needed */
+}
+
+.rose-button {
+    background-color: #FF6E6E; /* Adjust to match the exact shade of pink */
+    color: #212121; /* Adjust to match the dark color for the text and icon */
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
+    transition: background-color 0.3s ease;
+}
+
+.rose-button:hover {
+    background-color: #e45d5d; /* Adjust to match the hover shade */
+}
+
+.rose-button mat-icon {
+    font-size: 24px;
+    margin-right: 5px;
+    color: #0d121b; /* Adjust to match the dark color for the icon */
+}
+
+.rose-button span {
+    font-size: 13px;
+    font-weight: 500;
+    color: #0d121b; /* Adjust to match the dark color for the text */
+}
+
+.yellow-bg {
+    background-color: rgb(247, 247, 23);
+    padding: 5px 15px;
+    border-radius: 15px;
+    display: inline-block;
+    color: black;
+}
+
+.green-lime-bg {
+    background-color: lime;
+    padding: 5px 15px;
+    border-radius: 15px;
+    display: inline-block;
+    color: black;
+}
+
+.span {
+    font-size: 25px;
+    font-family: auto;
+    color: pink;
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px; /* Adjust spacing between elements */
+}
+
+.filter-item {
+    flex: 1 1 auto; /* Allow items to grow and shrink as needed */
+    min-width: 200px; /* Minimum width for form fields */
+}
+
+.apply-button {
+    flex: 0 0 auto; /* Prevent the button from growing */
+}
+
+.search-field {
+    flex:auto; /* Allow more space for the search field */
+}
+
+.mat-form-field {
+    width: 100%;
+}
+
+

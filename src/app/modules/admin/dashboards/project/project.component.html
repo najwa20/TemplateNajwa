@@ -1,0 +1,155 @@
+<div class="flex min-w-0 flex-auto flex-col">
+    <!-- Header -->
+    <div class="bg-card">
+        <div class="mx-auto flex w-full max-w-screen-xl flex-col px-6 sm:px-8">
+            <div
+                class="my-8 flex min-w-0 flex-auto flex-col sm:my-12 sm:flex-row sm:items-center"  >
+            
+                    <div class="ml-4 flex min-w-0 flex-col">
+                        <ng-container *transloco="let t">
+                            <div
+                                class="truncate text-2xl font-semibold leading-7 tracking-tight md:text-5xl md:leading-snug" >
+                               Liste de Contrats
+                            </div>
+                        </ng-container>
+                      <app-affaires></app-affaires>
+                    </div>
+                <!-- Actions -->   &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                <div class="mt-6 flex items-center space-x-3 sm:ml-2 sm:mt-0">
+                    <button mat-flat-button color="accent">
+                        <mat-icon class="icon-size-5">add</mat-icon>
+                        <span class="ml-2">Ajouter</span>
+                      </button>
+                    <!-- main.component.html -->
+                    <button mat-flat-button color="primary" >
+                        <mat-icon class="icon-size-5">filter_alt</mat-icon>
+                        <span class="ml-2">Filtrer la Recherche</span>
+                    </button>
+                </div>
+            </div>
+            <!-- Project selector -->
+            <div class="filter-section">
+                <div class="filters">
+                    <mat-form-field appearance="outline">
+                        <mat-select placeholder="Tous">
+                            <mat-option value="all">Tous</mat-option>
+                            <!-- Add other options as needed -->
+                        </mat-select>
+                    </mat-form-field>
+                    &nbsp; &nbsp;
+                    <mat-form-field appearance="outline">
+                        <mat-select placeholder="Date de création">
+                            <mat-option value="date_creation">Date de création</mat-option>
+                            <!-- Add other options as needed -->
+                        </mat-select>
+                    </mat-form-field>
+                    &nbsp; &nbsp;
+                    <mat-form-field appearance="outline">
+                        <mat-date-range-input [rangePicker]="picker" placeholder="2023/07/12 - 2024/07/12">
+                            <input matStartDate placeholder="Start date">
+                            <input matEndDate placeholder="End date">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+                    </mat-form-field>
+                    &nbsp; &nbsp;
+                    <button  mat-flat-button [color]="'accent'">
+                        <mat-icon>filter_list</mat-icon>
+                        Appliquer
+                    </button>
+                    &nbsp; &nbsp;
+                    <mat-form-field appearance="outline" class="search-field">
+                        <input matInput placeholder="Chercher par Client ou Organisme ou Gamme ou Statut">
+                        <button mat-icon-button matSuffix>
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="-mt-px flex-auto border-t pt-4 sm:pt-6">
+        <div class="mx-auto w-full max-w-screen-xl">
+            <!-- Tabs -->
+        <mat-tab-group>
+                <!-- Budget -->
+                <mat-tab >
+                    <ng-template matTabContent>
+                        <div class="grid w-full min-w-0 grid-cols-1 gap-6 sm:grid-cols-6">
+                            <!-- Budget details -->
+                            <div class="bg-card flex flex-auto flex-col overflow-hidden rounded-2xl p-6 shadow sm:col-span-6">
+                            
+                                <div class="mt-2 flex flex-auto flex-col overflow-x-auto">
+                                    <table class="min-w-240 overflow-y-visible" mat-table [dataSource]="table.budgetDetails.rows">
+                                        <!-- Client -->
+                                        <ng-container matColumnDef="client">
+                                            <th mat-header-cell *matHeaderCellDef>Client</th>
+                                            <td mat-cell *matCellDef="let budget">{{ budget.Client }}</td>
+                                        </ng-container>
+    
+                                        <!-- Organisme -->
+                                        <ng-container matColumnDef="organisme">
+                                            <th mat-header-cell *matHeaderCellDef>Organisme</th>
+                                            <td mat-cell *matCellDef="let budget">{{ budget.Organisme }}</td>
+                                        </ng-container>
+    
+                                        <!-- Date de création -->
+                                        <ng-container matColumnDef="dateCreation">
+                                            <th mat-header-cell *matHeaderCellDef>Date de création</th>
+                                            <td mat-cell *matCellDef="let budget">{{ budget.DateCreation }}</td>
+                                        </ng-container>
+    
+                                        <!-- Date d'effet -->
+                                        <ng-container matColumnDef="dateEffet">
+                                            <th mat-header-cell *matHeaderCellDef>Date d'effet</th>
+                                            <td mat-cell *matCellDef="let budget">{{ budget.DateEffet }}</td>
+                                        </ng-container>
+    
+                                        <!-- Gamme -->
+                                        <ng-container matColumnDef="gamme">
+                                            <th mat-header-cell *matHeaderCellDef>Gamme</th>
+                                            <td mat-cell *matCellDef="let budget">{{ budget.Gamme }}</td>
+                                        </ng-container>
+    
+                                        <!-- Statut -->
+                                        <ng-container matColumnDef="statut">
+                                            <th mat-header-cell *matHeaderCellDef>Statut</th>
+                                            <td mat-cell *matCellDef="let budget" [ngClass]="{'yellow-bg': budget.Statut === 'A Approuver', 'green-bg': budget.Statut === 'Auto-Approuve'}">{{ budget.Statut }}</td>
+                                        </ng-container>
+    
+                                        <!-- Actions -->
+                                        <ng-container matColumnDef="actions">
+                                            <th mat-header-cell *matHeaderCellDef>Actions</th>
+                                            <td mat-cell *matCellDef="let budget">
+                                                <!-- Add the actions buttons here -->
+                                                <button mat-icon-button [matMenuTriggerFor]="menu">
+                                                    <mat-icon>more_vert</mat-icon>
+                                                </button>
+                                                <mat-menu #menu="matMenu">
+                                                    <button mat-menu-item>Details</button>
+                                                    <button mat-menu-item>Changer statut</button>
+                                                    <button mat-menu-item>Échéanciers</button>
+                                                    <button mat-menu-item>Déclaration</button>
+                                                    <button mat-menu-item>Ajouter fichier</button>
+                                                    <button mat-menu-item>Envoyer Email</button>
+                                                </mat-menu>
+                                            </td>
+                                        </ng-container>
+    
+                                        <tr mat-header-row *matHeaderRowDef="table.budgetDetails.columns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: table.budgetDetails.columns"></tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+    
+    
+</div>

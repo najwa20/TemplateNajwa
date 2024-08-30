@@ -1,0 +1,521 @@
+<div class="popup-container">
+  <div class="popup-header">
+    <h2>Filtrer la recherche</h2>
+    <button mat-icon-button (click)="onClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="popup-content">
+    <form>
+      <div class="header-buttons">
+        <div>
+          <button mat-icon-button type="button">
+            <mat-icon>update</mat-icon>
+          </button>
+          <button mat-stroked-button type="button" color="warn" class="favorite-button">
+            <i class="fa-solid fa-bookmark"></i>&nbsp;&nbsp;Recherche favorite
+          </button>
+        </div>
+        <div>
+          <button mat-icon-button type="button">
+            <i class="fa-regular fa-bookmark"></i>
+          </button>
+          <button mat-stroked-button type="button" color="primary" class="search-button">
+            <i class="fa-solid fa-magnifying-glass"></i>&nbsp;&nbsp;Lancer la recherche
+          </button>
+        </div>
+      </div>
+
+      <!-- Centered buttons for Affaires and Opportunités -->
+      <div class="option-buttons">
+        <button 
+          class="option-button"
+          type="button" 
+          data-text="Affaires"
+          [class.active]="selectedOption === 'Affaires'"
+          (click)="selectOption('Affaires')">
+          Affaires
+        </button>
+        <button 
+          class="option-button"
+          type="button" 
+          data-text="Opportunités"
+          [class.active]="selectedOption === 'Opportunités'"
+          (click)="selectOption('Opportunités')">
+          Opportunités
+        </button>
+      </div>
+
+      <!-- List and form combined card -->
+      <mat-card class="list-card">
+        <mat-card-content *ngIf="selectedOption">
+          <div *ngFor="let item of getCurrentList()" (click)="toggleForm(item)">
+            <div class="list-item">
+              <span class="item-text">{{ item }}</span>
+              <button mat-icon-button type="button" class="arrow-button">
+                <i class="fa-solid" [ngClass]="selectedForm === item ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+              </button>
+            </div>
+            <!-- Form content based on the item -->
+            <div class="form-content" *ngIf="isOpen(item)"  (click)="$event.stopPropagation()">
+              <ng-container [ngSwitch]="item">
+                <!-- Form for Affaires -->
+                <ng-container *ngSwitchCase="'Affaires'">
+                  <mat-card>
+                    <mat-card-content>
+                      <div class="field-with-icon" (click)="$event.stopPropagation()">
+                        <div class="icon-container colored">
+                          <i class="fa-solid fa-equals"></i>
+                        </div>
+                        <div class="icon-container">
+                          <i class="fa-solid fa-not-equal"></i>
+                        </div>
+                        <mat-form-field class="full-width">
+                          <mat-label>Compagnie</mat-label>
+                          <input matInput placeholder="Enter company" [(ngModel)]="selectedCompany" (input)="onCompanyInput($event.target.value)">
+                          <mat-autocomplete>
+                            <mat-option *ngFor="let option of filteredCompanyOptions" [value]="option">
+                              {{ option }}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+                
+                      <div class="field-with-icon">
+                        <div class="icon-container colored">
+                          <i class="fa-solid fa-equals"></i>
+                        </div>
+                        <div class="icon-container">
+                          <i class="fa-solid fa-not-equal"></i>
+                        </div>
+                        <mat-form-field class="full-width">
+                          <mat-label>Les Gammes</mat-label>
+                          <input matInput placeholder="Enter range" [(ngModel)]="selectedRange" (input)="onRangeInput($event.target.value)">
+                          <mat-autocomplete>
+                            <mat-option *ngFor="let option of filteredRangeOptions" [value]="option">
+                              {{ option }}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+                
+                      <div class="field-with-icon">
+                        <div class="icon-container colored">
+                          <i class="fa-solid fa-equals"></i>
+                        </div>
+                        <div class="icon-container">
+                          <i class="fa-solid fa-not-equal"></i>
+                        </div>
+                        <mat-form-field class="full-width">
+                          <mat-label>Les Produits</mat-label>
+                          <input matInput placeholder="Enter products" [(ngModel)]="selectedProduct" (input)="onProductInput($event.target.value)">
+                          <mat-autocomplete>
+                            <mat-option *ngFor="let option of filteredProductOptions" [value]="option">
+                              {{ option }}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+                
+                      <div class="form-group">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Produit</mat-label>
+                          <input matInput placeholder="Vido">
+                        </mat-form-field>
+                        &nbsp; &nbsp; 
+                        <mat-form-field appearance="outline">
+                          <mat-label>Numéro de contrat</mat-label>
+                          <input matInput placeholder="K456796-ER">
+                        </mat-form-field>
+                      </div>
+                
+                      <div class="form-group">
+                        <mat-form-field appearance="outline" class="custom-date-field">
+                          <mat-label>Date d'effet</mat-label>
+                          <div class="input-with-icons">
+                            <i class="fa-solid fa-calendar calendar-icon"></i>
+                            <input matInput type="date">
+                            <i class="fa-solid fa-rectangle-xmark close-icon"></i>
+                          </div>
+                        </mat-form-field>
+                        &nbsp; &nbsp; 
+                        <mat-form-field appearance="outline" class="custom-date-field">
+                          <mat-label>Date de création</mat-label>
+                          <div class="input-with-icons">
+                            <i class="fa-solid fa-calendar calendar-icon"></i>
+                            <input matInput type="date">
+                            <i class="fa-solid fa-rectangle-xmark close-icon"></i>
+                          </div>
+                        </mat-form-field>
+                      </div>
+                      
+                    </mat-card-content>
+                  </mat-card>
+                </ng-container>
+                
+                
+                
+                <ng-container *ngSwitchCase="'Utilisateur'">
+                  <div class="produit-contact-wrapper full-width" (click)="$event.stopPropagation()"> 
+                    <mat-form-field class="half-width">
+                      <mat-label>Organismme</mat-label>
+                      <input matInput placeholder="Nom et Prenom ">
+                    </mat-form-field>
+
+                    <mat-form-field class="half-width">
+                      <mat-label>Liste de creation</mat-label>
+                      <input matInput placeholder="Téléphone ">
+                    </mat-form-field>
+                  </div>
+                  
+
+
+
+                  
+                </ng-container>
+
+                <!-- Form for Client -->
+                <ng-container *ngSwitchCase="'Client'">
+                  <div class="produit-contact-wrapper full-width" (click)="$event.stopPropagation()">
+                    <mat-form-field class="half-width">
+                      <mat-label>Nom et Prenom</mat-label>
+                      <input matInput placeholder="Nom et Prenom ">
+                    </mat-form-field>
+
+                    <mat-form-field class="half-width">
+                      <mat-label>Téléphone</mat-label>
+                      <input matInput placeholder="Téléphone ">
+                    </mat-form-field>
+                  </div>
+                  <div class="produit-contact-wrapper full-width">
+                    <mat-form-field class="half-width">
+                      <mat-label>Email</mat-label>
+                      <input matInput placeholder="Email">
+                    </mat-form-field>
+
+                    <mat-form-field class="half-width">
+                      <mat-label>Ville/CP</mat-label>
+                      <input matInput placeholder="Ville/CP">
+                    </mat-form-field>
+                  </div>
+                  <div class="produit-contact-wrapper full-width">
+                    <mat-form-field class="half-width">
+                      <mat-label>Raison Sociale</mat-label>
+                      <input matInput placeholder="Raison Sociale">
+                    </mat-form-field>
+
+                    <mat-form-field class="half-width">
+                      <mat-label>Mot Clé</mat-label>
+                      <input matInput placeholder="Mot Clé">
+                    </mat-form-field>
+                  </div>
+                </ng-container>
+
+                <!-- Form for Statuts Actions -->
+                  <!-- Form for Statuts Actions -->
+                  <!--ng-container *ngSwitchCase="'Statuts Actions'">
+                    <ul>
+                      <li>
+                        <button (click)="toggleSection('atrias')" class="toggle-btn">
+                          <span [ngClass]="isSectionOpen('atrias') ? 'arrow-down' : 'arrow-right'"></span>
+                          ATRIAS
+                        </button>
+                        <ul *ngIf="isSectionOpen('atrias')">
+                          <li>
+                            <button (click)="toggleSection('enregistrementAtria')" class="toggle-btn">
+                              <span [ngClass]="isSectionOpen('enregistrementAtria') ? 'arrow-down' : 'arrow-right'"></span>
+                              Enregistrement ATRIAS
+                            </button>
+                            <ul *ngIf="isSectionOpen('enregistrementAtria')">
+                              <li><input type="checkbox"> En attente accord client</li>
+                              <li><input type="checkbox"> Contrat Approuve</li>
+                              <li><input type="checkbox"> Contrat Refuse</li>
+                            </ul>
+                          </li>
+                          <li>
+                            <button (click)="toggleSection('gestionAtria')" class="toggle-btn">
+                              <span [ngClass]="isSectionOpen('gestionAtria') ? 'arrow-down' : 'arrow-right'"></span>
+                              Gestion ATRIAS
+                            </button>
+                            <ul *ngIf="isSectionOpen('gestionAtria')">
+                              <li><input type="checkbox"> Impaye</li>
+                              <li><input type="checkbox"> Resilié</li>
+                              <li><input type="checkbox"> Sans effet</li>
+                            </ul>
+                          </li>
+                          <li>
+                            <button (click)="toggleSection('preEnregistrementAtria')" class="toggle-btn">
+                              <span [ngClass]="isSectionOpen('preEnregistrementAtria') ? 'arrow-down' : 'arrow-right'"></span>
+                              Pre-Enregistrement ATRIAS
+                            </button>
+                            <ul *ngIf="isSectionOpen('preEnregistrementAtria')">
+                              <li><input type="checkbox"> En attente de reponse</li>
+                              <li><input type="checkbox"> Annulation</li>
+                              <li><input type="checkbox"> Pieces manquantes</li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                  
+                      <li>
+                        <button (click)="toggleSection('reseauxDeDistribution')" class="toggle-btn">
+                          <span [ngClass]="isSectionOpen('reseauxDeDistribution') ? 'arrow-down' : 'arrow-right'"></span>
+                          Réseaux de Distribution
+                        </button>
+                        <ul *ngIf="isSectionOpen('reseauxDeDistribution')">
+                          <li>
+                            <button (click)="toggleSection('creation1')" class="toggle-btn">
+                              <span [ngClass]="isSectionOpen('creation1') ? 'arrow-down' : 'arrow-right'"></span>
+                              Création 1
+                            </button>
+                            <ul *ngIf="isSectionOpen('creation1')">
+                              <li><input type="checkbox"> Option 1</li>
+                              <li><input type="checkbox"> Option 2</li>
+                            </ul>
+                          </li>
+                          <li>
+                            <button (click)="toggleSection('enregistrementReseaux')" class="toggle-btn">
+                              <span [ngClass]="isSectionOpen('enregistrementReseaux') ? 'arrow-down' : 'arrow-right'"></span>
+                              Enregistrement Réseaux
+                            </button>
+                            <ul *ngIf="isSectionOpen('enregistrementReseaux')">
+                              <li><input type="checkbox"> Option A</li>
+                              <li><input type="checkbox"> Option B</li>
+                            </ul>
+                          </li>
+                          <li>
+                            <button (click)="toggleSection('gestionReseaux')" class="toggle-btn">
+                              <span [ngClass]="isSectionOpen('gestionReseaux') ? 'arrow-down' : 'arrow-right'"></span>
+                              Gestion Réseaux
+                            </button>
+                            <ul *ngIf="isSectionOpen('gestionReseaux')">
+                              <li><input type="checkbox">  X</li>
+                              <li><input type="checkbox">  Y</li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                  
+                      <li>
+                        <button (click)="toggleSection('vente')" class="toggle-btn">
+                          <span [ngClass]="isSectionOpen('vente') ? 'arrow-down' : 'arrow-right'"></span>
+                          Vente
+                        </button>
+                        <ul *ngIf="isSectionOpen('vente')">
+                          <li>
+                            <button (click)="toggleSection('creationVente')" class="toggle-btn">
+                              <span [ngClass]="isSectionOpen('creationVente') ? 'arrow-down' : 'arrow-right'"></span>
+                              Création Vente
+                            </button>
+                            <ul *ngIf="isSectionOpen('creationVente')">
+                              <li><input type="checkbox"> Option A1</li>
+                              <li><input type="checkbox"> Option B1</li>
+                            </ul>
+                          </li>
+                          <li>
+                            <button (click)="toggleSection('enregistrementVente')" class="toggle-btn">
+                              <span [ngClass]="isSectionOpen('enregistrementVente') ? 'arrow-down' : 'arrow-right'"></span>
+                              Enregistrement Vente
+                            </button>
+                            <ul *ngIf="isSectionOpen('enregistrementVente')">
+                              <li><input type="checkbox"> Option A2</li>
+                              <li><input type="checkbox"> Option B2</li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                  
+                      <li>
+                        <button (click)="toggleSection('venteCommercial')" class="toggle-btn">
+                          <span [ngClass]="isSectionOpen('venteCommercial') ? 'arrow-down' : 'arrow-right'"></span>
+                          Vente Commercial
+                        </button>
+                        <ul *ngIf="isSectionOpen('venteCommercial')">
+                          <li>
+                            <button (click)="toggleSection('creationVenteCommercial')" class="toggle-btn">
+                              <span [ngClass]="isSectionOpen('creationVenteCommercial') ? 'arrow-down' : 'arrow-right'"></span>
+                              Création Vente Commercial
+                            </button>
+                            <ul *ngIf="isSectionOpen('creationVenteCommercial')">
+                              <li><input type="checkbox"> Option A3</li>
+                              <li><input type="checkbox"> Option B3</li>
+                            </ul>
+                          </li>
+                          <li>
+                            <button (click)="toggleSection('enregistrementVenteCommercial')" class="toggle-btn">
+                              <span [ngClass]="isSectionOpen('enregistrementVenteCommercial') ? 'arrow-down' : 'arrow-right'"></span>
+                              Enregistrement Vente Commercial
+                            </button>
+                            <ul *ngIf="isSectionOpen('enregistrementVenteCommercial')">
+                              <li><input type="checkbox"> Option A4</li>
+                              <li><input type="checkbox"> Option B4</li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                  
+                      <li>
+                        <button (click)="toggleSection('venteMRC')" class="toggle-btn">
+                          <span [ngClass]="isSectionOpen('venteMRC') ? 'arrow-down' : 'arrow-right'"></span>
+                          Vente MRC
+                        </button>
+                        <ul *ngIf="isSectionOpen('venteMRC')">
+                          <li>
+                            <button (click)="toggleSection('creationVenteMRC')" class="toggle-btn">
+                              <span [ngClass]="isSectionOpen('creationVenteMRC') ? 'arrow-down' : 'arrow-right'"></span>
+                              Création Vente MRC
+                            </button>
+                            <ul *ngIf="isSectionOpen('creationVenteMRC')">
+                              <li><input type="checkbox"> Option A5</li>
+                              <li><input type="checkbox"> Option B5</li>
+                            </ul>
+                          </li>
+                          <li>
+                            <button (click)="toggleSection('enregistrementVenteMRC')" class="toggle-btn">
+                              <span [ngClass]="isSectionOpen('enregistrementVenteMRC') ? 'arrow-down' : 'arrow-right'"></span>
+                              Enregistrement Vente MRC
+                            </button>
+                            <ul *ngIf="isSectionOpen('enregistrementVenteMRC')">
+                              <li><input type="checkbox"> Option A6</li>
+                              <li><input type="checkbox"> Option B6</li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                  
+                      <li>
+                        <button (click)="toggleSection('venteSante')" class="toggle-btn">
+                          <span [ngClass]="isSectionOpen('venteSante') ? 'arrow-down' : 'arrow-right'"></span>
+                          Vente Santé
+                        </button>
+                        <ul *ngIf="isSectionOpen('venteSante')">
+                          <li>
+                            <button (click)="toggleSection('creationVenteSante')" class="toggle-btn">
+                              <span [ngClass]="isSectionOpen('creationVenteSante') ? 'arrow-down' : 'arrow-right'"></span>
+                              Création Vente Santé
+                            </button>
+                            <ul *ngIf="isSectionOpen('creationVenteSante')">
+                              <li><input type="checkbox"> Option A7</li>
+                              <li><input type="checkbox"> Option B7</li>
+                            </ul>
+                          </li>
+                          <li>
+                            <button (click)="toggleSection('enregistrementVenteSante')" class="toggle-btn">
+                              <span [ngClass]="isSectionOpen('enregistrementVenteSante') ? 'arrow-down' : 'arrow-right'"></span>
+                              Enregistrement Vente Santé
+                            </button>
+                            <ul *ngIf="isSectionOpen('enregistrementVenteSante')">
+                              <li><input type="checkbox"> Option A8</li>
+                              <li><input type="checkbox"> Option B8</li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                  
+                      <li>
+                        <button (click)="toggleSection('cdvProdTsur')" class="toggle-btn">
+                          <span [ngClass]="isSectionOpen('cdvProdTsur') ? 'arrow-down' : 'arrow-right'"></span>
+                          CDV Prod Tsur
+                        </button>
+                        <ul *ngIf="isSectionOpen('cdvProdTsur')">
+                          <li>
+                            <button (click)="toggleSection('creationCdvProdTsur')" class="toggle-btn">
+                              <span [ngClass]="isSectionOpen('creationCdvProdTsur') ? 'arrow-down' : 'arrow-right'"></span>
+                              Création CDV Prod Tsur
+                            </button>
+                            <ul *ngIf="isSectionOpen('creationCdvProdTsur')">
+                              <li><input type="checkbox"> Option A9</li>
+                              <li><input type="checkbox"> Option B9</li>
+                            </ul>
+                          </li>
+                          <li>
+                            <button (click)="toggleSection('enregistrementCdvProdTsur')" class="toggle-btn">
+                              <span [ngClass]="isSectionOpen('enregistrementCdvProdTsur') ? 'arrow-down' : 'arrow-right'"></span>
+                              Enregistrement CDV Prod Tsur
+                            </button>
+                            <ul *ngIf="isSectionOpen('enregistrementCdvProdTsur')">
+                              <li><input type="checkbox"> Option A10</li>
+                              <li><input type="checkbox"> Option B10</li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </ng-container-->
+
+                <!-- Form for Opportunités -->
+                <ng-container *ngSwitchCase="'Opportunités'">
+                  <div class="produit-contact-wrapper full-width" (click)="$event.stopPropagation()">
+                    <mat-form-field class="half-width">
+                      <mat-label>Date Création</mat-label>
+                      <input matInput placeholder="Date Création">
+                    </mat-form-field>
+
+                    <mat-form-field class="half-width">
+                      <mat-label>Date du</mat-label>
+                      <input matInput placeholder="Date du">
+                    </mat-form-field>
+                  </div>
+                  <div class="produit-contact-wrapper full-width" (click)="$event.stopPropagation()">
+                    <mat-form-field class="half-width">
+                      <mat-label>Campagne</mat-label>
+                      <input matInput placeholder="Campagne">
+                    </mat-form-field>
+
+                    <mat-form-field class="half-width">
+                      <mat-label>Cycle de Vie</mat-label>
+                      <input matInput placeholder="Cycle de Vie">
+                    </mat-form-field>
+                  </div>
+                  <div class="produit-contact-wrapper full-width" (click)="$event.stopPropagation()">
+                    <mat-form-field class="half-width">
+                      <mat-label>Mots Clés</mat-label>
+                      <input matInput placeholder="Mots Clés">
+                    </mat-form-field>
+                  </div>
+                </ng-container>
+                <ng-container *ngSwitchCase="'Blocage Qualité'">
+                  <div class="form-content" (click)="$event.stopPropagation()">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Text </mat-label>
+                      <input matInput placeholder="Text Field">
+                    </mat-form-field>
+                
+                    <mat-form-field appearance="outline">
+                      <mat-label>Examiner Initial du Dossier</mat-label>
+                      <mat-select>
+                        <mat-option *ngFor="let option of examinerInitialOptions" [value]="option">{{ option }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                
+                    <mat-form-field appearance="outline">
+                      <mat-label>Confirmation des Informations</mat-label>
+                      <mat-select>
+                        <mat-option *ngFor="let option of confirmationOptions" [value]="option">{{ option }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                
+                    <mat-form-field appearance="outline">
+                      <mat-label>Processus de Vente</mat-label>
+                      <mat-select>
+                        <mat-option *ngFor="let option of processusOptions" [value]="option">{{ option }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                
+                    <mat-form-field appearance="outline">
+                      <mat-label>Clarté et Précision</mat-label>
+                      <mat-select>
+                        <mat-option *ngFor="let option of clarteOptions" [value]="option">{{ option }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </ng-container>
+                
+              </ng-container>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </form>
+  </div>
+</div>

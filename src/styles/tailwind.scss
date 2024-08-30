@@ -1,0 +1,28 @@
+/* ----------------------------------------------------------------------------------------------------- */
+/*  @ Main Tailwind file for injecting utilities.
+/* ----------------------------------------------------------------------------------------------------- */
+@tailwind utilities;
+// Define custom colors
+$pink-color: #e91e63; // Pink for Ajouter button
+$dark-blue-color: #003366; // Dark blue for Filter button
+$text-color: #ffffff; // White for text
+
+// Custom class for Ajouter button
+.pink-button {
+  background-color: $pink-color;
+  color: $text-color;
+
+  &:hover {
+    background-color: darken($pink-color, 10%);
+  }
+}
+
+// Custom class for Filter button
+.dark-blue-button {
+  background-color: $dark-blue-color;
+  color: $text-color;
+
+  &:hover {
+    background-color: darken($dark-blue-color, 10%);
+  }
+}

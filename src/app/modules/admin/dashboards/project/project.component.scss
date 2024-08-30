@@ -1,0 +1,57 @@
+// Define color variables
+$yellow-bg-color: rgb(250, 250, 4);
+$green-bg-color: lightgreen;
+$text-color: black;
+$dark-blue: #003366; // Dark blue color
+$white: #ffffff; // White color for text
+
+// Styles for filter-section
+.filter-section {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    background-color: #f0f2f5;
+    border-radius: 8px;
+    margin-bottom: 16px;
+
+    .filters {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        .mat-form-field {
+            min-width: 160px;
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: $dark-blue; // Apply custom button background
+            color: $white; // Apply custom text color
+            &:hover {
+                background-color: darken($dark-blue, 10%); // Darken on hover
+            }
+        }
+    }
+
+    .search-field {
+        flex-grow: 1;
+    }
+}
+
+// Apply styles for yellow and green backgrounds
+.yellow-bg {
+    background-color: $yellow-bg-color;
+    color: $text-color;
+}
+
+.green-bg {
+    background-color: $green-bg-color;
+    color: $text-color;
+}
+
+// Hide textareas with specific attribute
+textarea[fuse-highlight] {
+    display: none;
+}
